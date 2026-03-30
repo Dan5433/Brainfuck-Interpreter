@@ -38,10 +38,10 @@ public final class Interpreter {
                 memory[memoryPointer]--;
                 break;
             case '.':
-                System.out.print((char) memory[memoryPointer]);
+                System.out.print((char) ((short) memory[memoryPointer] - Byte.MIN_VALUE));
                 break;
             case ',':
-                memory[memoryPointer] = (byte) System.in.read();
+                memory[memoryPointer] = (byte) (Main.CONSOLE_READER.readLine().charAt(0) + Byte.MIN_VALUE);
                 break;
         }
 
