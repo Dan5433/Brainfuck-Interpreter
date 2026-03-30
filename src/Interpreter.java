@@ -3,6 +3,8 @@ import java.io.IOException;
 
 public final class Interpreter {
     private final BufferedReader fileReader;
+    private final String input;
+    private int inputPointer = 0;
 
     private final byte[] memory = new byte[Short.MAX_VALUE];
     private int memoryPointer = 0;
@@ -41,14 +43,16 @@ public final class Interpreter {
                 System.out.print((char) ((short) memory[memoryPointer] - Byte.MIN_VALUE));
                 break;
             case ',':
-                memory[memoryPointer] = (byte) (Main.CONSOLE_READER.readLine().charAt(0) + Byte.MIN_VALUE);
+                memory[memoryPointer] = (byte) (input.charAt(inputPointer) + Byte.MIN_VALUE);
+                inputPointer++;
                 break;
         }
 
         return 0;
     }
 
-    public Interpreter(BufferedReader fileReader) {
+    public Interpreter(BufferedReader fileReader, String input) {
         this.fileReader = fileReader;
+        this.input = input;
     }
 }

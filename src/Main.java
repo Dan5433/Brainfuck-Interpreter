@@ -9,12 +9,12 @@ public final class Main {
     public static void main(String[] args) throws IOException {
         System.out.println("Brainfuck Interpreter by Abtu\n");
 
-        Interpreter interpreter = new Interpreter(createFileReader());
+        Interpreter interpreter = new Interpreter(createFileReader(), getInput());
 
-        System.out.println("File loaded successfully, starting execution...");
+        System.out.println("\nProgram loaded successfully, starting execution...\n");
         int exitCode = interpreter.interpret();
 
-        System.out.println("\nBrainfuck program finished with exit code " + exitCode);
+        System.out.println("\n\nBrainfuck program finished with exit code " + exitCode);
     }
 
     private static BufferedReader createFileReader() throws IOException {
@@ -36,5 +36,10 @@ public final class Main {
         }
 
         return new BufferedReader(new FileReader(file));
+    }
+
+    private static String getInput() throws IOException {
+        System.out.println("Enter input for the program: ");
+        return CONSOLE_READER.readLine();
     }
 }
