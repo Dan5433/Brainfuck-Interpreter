@@ -4,7 +4,6 @@ public final class Main {
     public static final String FILE_EXTENSION = ".bf";
 
     public static final BufferedReader CONSOLE_READER = new BufferedReader(new InputStreamReader(System.in));
-    private static BufferedReader fileReader;
 
     public static void main(String[] args) throws IOException {
         System.out.println("Brainfuck Interpreter by Abtu\n");
