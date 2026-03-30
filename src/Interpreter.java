@@ -2,44 +2,53 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public final class Interpreter {
-    private BufferedReader fileReader;
+    private final BufferedReader fileReader;
 
-    private byte[] memory = new byte[Short.MAX_VALUE];
-    private int dataPointer = 0;
+    private final byte[] memory = new byte[Short.MAX_VALUE];
+    private int memoryPointer = 0;
 
-    public Interpreter(BufferedReader fileReader) {
-        this.fileReader = fileReader;
-    }
-
-    public void interpret() throws IOException {
-        int dataPointer = 0;
-
+    public int interpret() throws IOException {
         while (true) {
             int input = fileReader.read();
             if (input == -1)
-                return;
+                return 0;
 
-            char command = (char) input;
-            switch (command) {
-                case '>':
-                    dataPointer++;
-                    break;
-                case '<':
-                    dataPointer--;
-                    break;
-                case '+':
-                    memory[dataPointer]++;
-                    break;
-                case '-':
-                    memory[dataPointer]--;
-                    break;
-                case '.':
-                    System.out.print((char) memory[dataPointer]);
-                    break;
-                case ',':
-                    memory[dataPointer] = (byte) System.in.read();
-                    break;
-            }
+            int code = executeCommand((char) input);
+            if (code != 0)
+                return code;
         }
+    }
+
+    private int executeCommand(char command) throws IOException {
+        switch (command) {
+            case '>':
+                if (memoryPointer == Short.MAX_VALUE)
+                    return 1;
+                memoryPointer++;
+                break;
+            case '<':
+                if (memoryPointer == 0)
+                    return 1;
+                memoryPointer--;
+                break;
+            case '+':
+                memory[memoryPointer]++;
+                break;
+            case '-':
+                memory[memoryPointer]--;
+                break;
+            case '.':
+                System.out.print((char) memory[memoryPointer]);
+                break;
+            case ',':
+                memory[memoryPointer] = (byte) System.in.read();
+                break;
+        }
+
+        return 0;
+    }
+
+    public Interpreter(BufferedReader fileReader) {
+        this.fileReader = fileReader;
     }
 }

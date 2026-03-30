@@ -12,7 +12,9 @@ public final class Main {
         Interpreter interpreter = new Interpreter(createFileReader());
 
         System.out.println("File loaded successfully, starting execution...");
-        interpreter.interpret();
+        int exitCode = interpreter.interpret();
+
+        System.out.println("\nBrainfuck program finished with exit code " + exitCode);
     }
 
     private static BufferedReader createFileReader() throws IOException {
